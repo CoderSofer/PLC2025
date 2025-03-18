@@ -87,6 +87,7 @@ public class Overflow
         {
             ns = ns * n;
 //             assert ?? : "Floating-point overflow";
+            assert ns != ns * 2 : "Floating-point overflow detected!"; //Detect if ovberflow
             resultList.add(ns);
         }
         return resultList;
@@ -113,6 +114,7 @@ public class Overflow
         {
             ns_inv = ns_inv / n; // update from 1/n^(i-1) to 1/n^i
 //             assert ?? : "Floating point underflow";
+            assert ns_inv != 0.0 : "Floating point underflow"; // Make sure it isnt an underflow
             geom_sum = ns_inv + geom_sum;
             resultList.add(geom_sum);
         }
