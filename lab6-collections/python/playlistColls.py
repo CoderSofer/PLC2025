@@ -57,8 +57,8 @@ advert1 = Advert(Product("Bounty", "Mars"), 15.0)
 things = [111, piece1, "hello", advert1, [piece2]]
 
 print("things = %s" % things)
-
-piecesFromThings = "todo" #TASK 6.3.(c) -- replace "todo" by a list comprehension
+#TASK 6.3.(c) -- replace "todo" by a list comprehension
+piecesFromThings = [ piece for piece in things if piece.__class__ == Piece ]
 
 print("piecesFromThings = %s" % piecesFromThings)
 
@@ -66,15 +66,15 @@ playlist1 = [piece1, advert1, piece2]
 
 print("playlist1 = %s" % playlist1)
 
-lengths1 = [ item.length_secs for item in playlist1 ]
+lengths1 = [ item.length_secs for item in playlist1 ] #Lengths
 
 print("lengths1 = %s" % lengths1)
 
-playlist1noAds = [ item for item in playlist1 if item.__class__ != Advert ] 
+playlist1noAds = [ item for item in playlist1 if item.__class__ != Advert ]  #Without ads
 
 print("playlist1noAds = %s" % playlist1noAds)
-
-shortItemLenghts1 = "todo" # TASK 6.3.(b) -- replace "todo" by a list comprehension
+# TASK 6.3.(b) -- replace "todo" by a list comprehension
+shortItemLenghts1 = sum(item.length_secs for item in playlist1 if item.length_secs < 20 )
 
 print("shortItemLenghts1 = %s" % shortItemLenghts1)
 
