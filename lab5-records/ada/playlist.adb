@@ -14,37 +14,53 @@ procedure PlayList is
         Put (To_String (p.name));
     end Put_Person;
 
-    type Item is record
-        name        : Unbounded_String;
-        performer   : Person;
-        length_secs : Float;
+    type ItemVariant is (piece, pause);
+
+    type Item(variant : ItemVariant) is record
+      length_secs : Float;
+      case variant is
+         when piece => 
+            name        : Unbounded_String;
+            performer   : Person;
+         when pause => null;
+            
+      end case;
     end record;
 
     procedure Put_Item (i : Item) is
     begin
-        Put (To_String (i.name));
-        Put (" by ");
-        Put_Person (i.performer);
-        Put (" (");
-        Put (i.length_secs, aft => 1, exp => 0);
-        Put ("s)");
+        case i.variant is
+        when piece =>
+            Put (To_String (i.name));
+            Put (" by ");
+            Put_Person (i.performer);
+            Put (" (");
+            Put (i.length_secs, aft => 1, exp => 0);
+            Put ("s)");
+        when pause =>
+            Put ("Pause (");
+            Put (i.length_secs, aft => 1, exp => 0);
+            Put ("s)");
+         end case;
     end Put_Item;
 
     piece1 : Item :=
-       (name => To_Unbounded_String ("Moonlight Sonata"),
-        performer => (name => To_Unbounded_String ("Claudio Arrau")),
-        length_secs => 17.0*60.0+26.0
+       (
+         variant => piece, 
+         name => To_Unbounded_String ("Moonlight Sonata"),
+         performer => (name => To_Unbounded_String ("Claudio Arrau")),
+         length_secs => 17.0*60.0+26.0
        );
 
-    -- pause1 : Item :=
-    --    (
-    --     item_variant => PAUSE,
-    --     length_secs => 5.0
-    --    );
+    pause1 : Item :=
+      (
+         variant => pause, 
+         length_secs => 5.0
+      );
 
 begin
     Put_Item (piece1);
     Put_Line ("");
-    -- Put_Item(pause1);
-    -- Put_Line ("");
+    Put_Item(pause1);
+    Put_Line ("");
 end PlayList;
